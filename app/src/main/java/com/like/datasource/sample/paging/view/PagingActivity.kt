@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.like.common.util.Logger
+import com.like.common.util.datasource.collectWithProgress
 import com.like.datasource.sample.R
 import com.like.datasource.sample.databinding.ActivityPagingBinding
 import com.like.datasource.sample.paging.dataSource.inDb.DbBannerNotPagingDataSource
@@ -18,8 +19,6 @@ import com.like.datasource.sample.paging.dataSource.inMemory.MemoryDataSource
 import com.like.datasource.sample.paging.dataSource.inMemory.MemoryTopArticleNotPagingDataSource
 import com.like.datasource.sample.paging.repository.PagingRepository
 import com.like.datasource.sample.paging.viewModel.PagingViewModel
-import com.like.datasource.util.collect
-import com.like.datasource.util.progress
 import kotlinx.coroutines.launch
 
 class PagingActivity : AppCompatActivity() {
@@ -45,21 +44,16 @@ class PagingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding
         lifecycleScope.launch {
-            mViewModel.getResult().progress(
-                {
-                    Logger.v("show")
-                },
-                {
-                    Logger.d("hide")
-                }
-            ).collect(
-                {
-                    Logger.e("$it")
-                },
-                {
-                    Logger.printCollection(it, Log.INFO)
-                }
-            )
+            mViewModel.getResult()
+                .collectWithProgress(
+                    this@PagingActivity,
+                    ProgressDialogFragment.newInstance(),
+                    {
+                        Logger.e("$it")
+                    },
+                    {
+                        Logger.printCollection(it, Log.INFO)
+                    })
         }
     }
 
