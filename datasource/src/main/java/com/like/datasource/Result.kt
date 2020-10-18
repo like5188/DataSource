@@ -18,8 +18,4 @@ data class Result<ResultType>(
     val loadAfter: (() -> Unit)? = null,
     // 往前加载更多，不分页时不用设置
     val loadBefore: (() -> Unit)? = null
-) {
-    fun update(newResultReportFlow: Flow<ResultReport<ResultType>>): Result<ResultType> {
-        return Result(newResultReportFlow, initial, refresh, retry, loadAfter, loadBefore)
-    }
-}
+)
