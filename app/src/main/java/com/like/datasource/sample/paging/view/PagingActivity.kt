@@ -48,12 +48,13 @@ class PagingActivity : AppCompatActivity() {
                 .collectWithProgress(
                     this@PagingActivity,
                     ProgressDialogFragment.newInstance(),
-                    {
-                        Logger.e("$it")
+                    { requestType, throwable ->
+                        Logger.e("$throwable")
                     },
-                    {
-                        Logger.printCollection(it, Log.INFO)
-                    })
+                    { requestType, result ->
+                        Logger.printCollection(result, Log.INFO)
+                    }
+                )
         }
     }
 
