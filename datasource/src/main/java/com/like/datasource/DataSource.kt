@@ -20,6 +20,8 @@ abstract class DataSource<ResultType> {
     private var mFailureRequestType: RequestType? = null
     private val _controlCh = ConflatedBroadcastChannel<RequestType>()
 
+    fun isRunning() = isRunning.get()
+
     protected fun getResultReportFlow(): Flow<ResultReport<ResultType>> = channelFlow {
         _controlCh.asFlow().collect { requestType ->
             send(ResultReport(requestType, RequestState.Running))
