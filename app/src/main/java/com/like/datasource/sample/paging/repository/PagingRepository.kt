@@ -15,5 +15,5 @@ class PagingRepository(
     private val dbTopArticleNotPagingDataSource: DbTopArticleNotPagingDataSource,
     private val memoryDataSource: MemoryDataSource
 ) {
-    fun getResult() = memoryBannerNotPagingDataSource.result()
+    fun getResult() = dbBannerNotPagingDataSource.result()
 }
