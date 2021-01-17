@@ -30,9 +30,7 @@ class DbBannerNotPagingDataSource(private val activity: FragmentActivity) :
 
     override suspend fun fetchFromNetworkAndSaveToDb(requestType: RequestType) {
         val data = RetrofitUtils.retrofitApi.getBanner().getDataIfSuccess()
-        if (data.isNullOrEmpty()) {
-            throw RuntimeException("data is null or empty")
-        } else {
+        if (!data.isNullOrEmpty()) {
             bannerEntityDao.insertAll(data)
         }
     }
