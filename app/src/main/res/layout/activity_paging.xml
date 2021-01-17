@@ -50,6 +50,27 @@
                 android:onClick="retry"
                 android:text="retry"
                 android:textAllCaps="false" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="changeDb"
+                android:text="changeDb"
+                android:textAllCaps="false" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="clearDb"
+                android:text="clearDb"
+                android:textAllCaps="false" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="queryDb"
+                android:text="queryDb"
+                android:textAllCaps="false" />
         </LinearLayout>
 
     </LinearLayout>

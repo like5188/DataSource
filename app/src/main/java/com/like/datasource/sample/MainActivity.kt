@@ -21,25 +21,4 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, PagingActivity::class.java))
     }
 
-    fun clearDb(view: View) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            Db.getInstance(application).topArticleEntityDao().deleteAll()
-            Db.getInstance(application).bannerEntityDao().deleteAll()
-            Db.getInstance(application).articleEntityDao().deleteAll()
-        }
-    }
-
-    fun queryDb(view: View) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            Db.getInstance(application).topArticleEntityDao().getAll().forEach {
-                Logger.i(it.toString())
-            }
-            Db.getInstance(application).bannerEntityDao().getAll().forEach {
-                Logger.i(it.toString())
-            }
-            Db.getInstance(application).articleEntityDao().getAll().forEach {
-                Logger.i(it.toString())
-            }
-        }
-    }
 }
