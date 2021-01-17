@@ -10,18 +10,11 @@ import com.like.datasource.Result
  *
  * @param ResultType    返回的数据类型
  */
-abstract class NotPagingDataSource<ResultType> : DataSource<ResultType>() {
+abstract class NotPagingDataSource<ResultType> : BaseNotPagingDataSource<ResultType>() {
 
-    final override suspend fun loadData(requestType: RequestType): ResultType {
+    final override suspend fun realLoadData(requestType: RequestType): ResultType {
         return load(requestType)
     }
-
-    final override fun result(): Result<ResultType> = Result(
-        resultReportFlow = getResultReportFlow(),
-        initial = this::initial,
-        refresh = this::refresh,
-        retry = this::retry
-    )
 
     /**
      * @param requestType   请求类型：[RequestType]

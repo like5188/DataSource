@@ -11,26 +11,22 @@ import com.like.datasource.Result
  *
  * @param ResultType    返回的数据类型
  */
-abstract class NotPagingDbDataSource<ResultType> : DataSource<ResultType>() {
-
-    final override suspend fun loadData(requestType: RequestType): ResultType {
-        var data = loadFromDb(requestType)
-        if (shouldFetch(requestType, data)) {
-            Log.d("NotPagingDbDataSource", "即将从网络获取数据并存入数据库中")
-            fetchFromNetworkAndSaveToDb(requestType)
-            Log.d("NotPagingDbDataSource", "即将重新从数据库获取数据")
-            data = loadFromDb(requestType)
-        }
-        Log.d("NotPagingDbDataSource", "从数据库获取到了数据：$data")
-        return data
+abstract class NotPagingDbDataSource<ResultType> : BaseNotPagingDataSource<ResultType>() {
+    companion object {
+        private val TAG = NotPagingDbDataSource::class.java.simpleName
     }
 
-    final override fun result(): Result<ResultType> = Result(
-        resultReportFlow = getResultReportFlow(),
-        initial = this::initial,
-        refresh = this::refresh,
-        retry = this::retry
-    )
+    final override suspend fun realLoadData(requestType: RequestType): ResultType {
+        var data = loadFromDb(requestType)
+        if (shouldFetch(requestType, data)) {
+            Log.d(TAG, "即将从网络获取数据并存入数据库中")
+            fetchFromNetworkAndSaveToDb(requestType)
+            Log.d(TAG, "即将重新从数据库获取数据")
+            data = loadFromDb(requestType)
+        }
+        Log.d(TAG, "从数据库获取到了数据：$data")
+        return data
+    }
 
     /**
      * 从数据库中获取数据

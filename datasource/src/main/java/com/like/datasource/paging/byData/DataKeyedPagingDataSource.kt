@@ -12,34 +12,12 @@ import com.like.datasource.Result
  * @param ResultType    返回的数据类型
  * @param isLoadAfter   true：往后加载更多（默认值）；false：往前加载更多。
  */
-abstract class DataKeyedPagingDataSource<Key : Any, ResultType>(
-    private val pageSize: Int,
-    private val isLoadAfter: Boolean = true
-) : DataSource<ResultType>() {
-    private var key: Key? = null
+abstract class DataKeyedPagingDataSource<Key : Any, ResultType>(pageSize: Int, isLoadAfter: Boolean = true) :
+    BaseDataKeyedPagingDataSource<Key, ResultType>(pageSize, isLoadAfter) {
 
-    final override suspend fun loadData(requestType: RequestType): ResultType {
-        if (requestType is RequestType.Initial || requestType is RequestType.Refresh) {
-            key = null
-        }
-        return load(requestType, key, pageSize).apply {
-            key = getKey(this)
-        }
+    final override suspend fun realLoadData(requestType: RequestType, key: Key?, pageSize: Int): ResultType {
+        return load(requestType, key, pageSize)
     }
-
-    final override fun result(): Result<ResultType> = Result(
-        resultReportFlow = getResultReportFlow(),
-        initial = this::initial,
-        refresh = this::refresh,
-        retry = this::retry,
-        loadAfter = if (isLoadAfter) this::loadAfter else null,
-        loadBefore = if (isLoadAfter) null else this::loadBefore
-    )
-
-    /**
-     * 根据返回的数据获取上一页或者下一页的 key。
-     */
-    protected abstract fun getKey(data: ResultType): Key?
 
     /**
      * @param requestType   请求类型：[RequestType]
