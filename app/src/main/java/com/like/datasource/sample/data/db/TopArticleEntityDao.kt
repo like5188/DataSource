@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.like.datasource.sample.data.model.TopArticleEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TopArticleEntityDao : BaseDao<TopArticleEntity> {
@@ -16,4 +17,7 @@ interface TopArticleEntityDao : BaseDao<TopArticleEntity> {
 
     @Query("SELECT * FROM TopArticleEntity ORDER BY id ASC")
     fun getAll(): List<TopArticleEntity>
+
+    @Query("SELECT * FROM TopArticleEntity ORDER BY id ASC")
+    fun getAllFlow(): Flow<List<TopArticleEntity>>
 }

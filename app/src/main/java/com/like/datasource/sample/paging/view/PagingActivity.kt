@@ -21,6 +21,7 @@ import com.like.datasource.sample.paging.dataSource.inMemory.MemoryTopArticleNot
 import com.like.datasource.sample.paging.repository.PagingRepository
 import com.like.datasource.sample.paging.viewModel.PagingViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class PagingActivity : AppCompatActivity() {
@@ -77,6 +78,14 @@ class PagingActivity : AppCompatActivity() {
 
     fun retry(view: View) {
         mViewModel.getResult().retry()
+    }
+
+    fun getAllFlow(view: View) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            Db.getInstance(application).topArticleEntityDao().getAllFlow().collect {
+                Logger.e("getAllFlow $it")
+            }
+        }
     }
 
     fun changeDb(view: View) {
