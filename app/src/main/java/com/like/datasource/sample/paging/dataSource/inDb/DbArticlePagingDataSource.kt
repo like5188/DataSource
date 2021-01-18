@@ -37,6 +37,9 @@ class DbArticlePagingDataSource(private val activity: FragmentActivity) :
     ) {
         val data = RetrofitUtils.retrofitApi.getArticle(pageNo).getDataIfSuccess()?.datas
         if (!data.isNullOrEmpty()) {
+            if (requestType == RequestType.Refresh) {
+                articleEntityDao.deleteAll()
+            }
             articleEntityDao.insertAll(data)
         }
     }

@@ -17,5 +17,5 @@ class PagingRepository(
     private val memoryArticlePagingDataSource: MemoryArticlePagingDataSource,
     private val memoryDataSource: MemoryDataSource
 ) {
-    fun getResult() = dbArticlePagingDataSource.result()
+    fun getResult() = memoryDataSource.result()
 }

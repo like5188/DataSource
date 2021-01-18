@@ -24,6 +24,9 @@ class DbTopArticleNotPagingDataSource(private val activity: FragmentActivity) :
     override suspend fun fetchFromNetworkAndSaveToDb(requestType: RequestType) {
         val data = RetrofitUtils.retrofitApi.getTopArticle().getDataIfSuccess()
         if (!data.isNullOrEmpty()) {
+            if (requestType == RequestType.Refresh) {
+                topArticleEntityDao.deleteAll()
+            }
             topArticleEntityDao.insertAll(data)
         }
     }

@@ -65,6 +65,6 @@ abstract class BasePageNoKeyedPagingDataSource<ResultType>(
      * @param pageSize      每页加载数量
      */
     @WorkerThread
-    protected abstract suspend fun realLoadData(requestType: RequestType, pageNo: Int, pageSize: Int): ResultType
+    abstract suspend fun realLoadData(requestType: RequestType, pageNo: Int, pageSize: Int): ResultType
 
 }

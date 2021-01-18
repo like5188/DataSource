@@ -27,5 +27,5 @@ abstract class BaseNotPagingDataSource<ResultType> : DataSource<ResultType>() {
      * @param requestType   请求类型：[RequestType]
      */
     @WorkerThread
-    protected abstract suspend fun realLoadData(requestType: RequestType): ResultType
+    abstract suspend fun realLoadData(requestType: RequestType): ResultType
 }

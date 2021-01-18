@@ -38,7 +38,11 @@ class PagingActivity : AppCompatActivity() {
                     MemoryBannerNotPagingDataSource(),
                     MemoryTopArticleNotPagingDataSource(),
                     MemoryArticlePagingDataSource(),
-                    MemoryDataSource()
+                    MemoryDataSource(
+                        MemoryBannerNotPagingDataSource(),
+                        MemoryTopArticleNotPagingDataSource(),
+                        MemoryArticlePagingDataSource()
+                    )
                 )
             )
         ).get(PagingViewModel::class.java)
