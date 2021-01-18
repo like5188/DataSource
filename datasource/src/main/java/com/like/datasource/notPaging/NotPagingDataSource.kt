@@ -1,9 +1,7 @@
 package com.like.datasource.notPaging
 
 import androidx.annotation.WorkerThread
-import com.like.datasource.DataSource
 import com.like.datasource.RequestType
-import com.like.datasource.Result
 
 /**
  * 不分页数据源。

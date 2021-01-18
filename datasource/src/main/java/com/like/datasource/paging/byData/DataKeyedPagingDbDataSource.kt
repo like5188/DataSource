@@ -2,9 +2,7 @@ package com.like.datasource.paging.byData
 
 import android.util.Log
 import androidx.annotation.WorkerThread
-import com.like.datasource.DataSource
 import com.like.datasource.RequestType
-import com.like.datasource.Result
 
 /**
  * 根据接口返回的数据，由用户来确定分页 key 的分页数据源。
@@ -13,8 +11,8 @@ import com.like.datasource.Result
  * @param ResultType    返回的数据类型
  * @param isLoadAfter   true：往后加载更多（默认值）；false：往前加载更多。
  */
-abstract class DataKeyedPagingDbDataSource<Key : Any, ResultType>(pageSize: Int, isLoadAfter: Boolean = true)
-    : BaseDataKeyedPagingDataSource<Key, ResultType>(pageSize, isLoadAfter) {
+abstract class DataKeyedPagingDbDataSource<Key : Any, ResultType>(pageSize: Int, isLoadAfter: Boolean = true) :
+    BaseDataKeyedPagingDataSource<Key, ResultType>(pageSize, isLoadAfter) {
     companion object {
         private val TAG = DataKeyedPagingDbDataSource::class.java.simpleName
     }

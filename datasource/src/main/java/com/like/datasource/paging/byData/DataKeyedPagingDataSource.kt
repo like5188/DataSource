@@ -1,9 +1,7 @@
 package com.like.datasource.paging.byData
 
 import androidx.annotation.WorkerThread
-import com.like.datasource.DataSource
 import com.like.datasource.RequestType
-import com.like.datasource.Result
 
 /**
  * 根据接口返回的数据，由用户来确定分页 key 的分页数据源。

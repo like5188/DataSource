@@ -14,10 +14,11 @@ import com.like.datasource.sample.data.db.Db
 import com.like.datasource.sample.databinding.ActivityPagingBinding
 import com.like.datasource.sample.paging.dataSource.inDb.DbArticlePagingDataSource
 import com.like.datasource.sample.paging.dataSource.inDb.DbBannerNotPagingDataSource
+import com.like.datasource.sample.paging.dataSource.inDb.DbPagingDataSource
 import com.like.datasource.sample.paging.dataSource.inDb.DbTopArticleNotPagingDataSource
 import com.like.datasource.sample.paging.dataSource.inMemory.MemoryArticlePagingDataSource
 import com.like.datasource.sample.paging.dataSource.inMemory.MemoryBannerNotPagingDataSource
-import com.like.datasource.sample.paging.dataSource.inMemory.MemoryDataSource
+import com.like.datasource.sample.paging.dataSource.inMemory.MemoryPagingDataSource
 import com.like.datasource.sample.paging.dataSource.inMemory.MemoryTopArticleNotPagingDataSource
 import com.like.datasource.sample.paging.repository.PagingRepository
 import com.like.datasource.sample.paging.viewModel.PagingViewModel
@@ -35,10 +36,15 @@ class PagingActivity : AppCompatActivity() {
                     DbBannerNotPagingDataSource(this),
                     DbTopArticleNotPagingDataSource(this),
                     DbArticlePagingDataSource(this),
+                    DbPagingDataSource(
+                        DbBannerNotPagingDataSource(this),
+                        DbTopArticleNotPagingDataSource(this),
+                        DbArticlePagingDataSource(this)
+                    ),
                     MemoryBannerNotPagingDataSource(),
                     MemoryTopArticleNotPagingDataSource(),
                     MemoryArticlePagingDataSource(),
-                    MemoryDataSource(
+                    MemoryPagingDataSource(
                         MemoryBannerNotPagingDataSource(),
                         MemoryTopArticleNotPagingDataSource(),
                         MemoryArticlePagingDataSource()
