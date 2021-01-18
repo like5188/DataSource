@@ -16,4 +16,7 @@ interface ArticleEntityDao : BaseDao<ArticleEntity> {
 
     @Query("SELECT * FROM ArticleEntity ORDER BY id ASC")
     fun getAll(): List<ArticleEntity>
+
+    @Query("SELECT * FROM ArticleEntity ORDER BY id ASC limit :pageSize offset :offset")
+    fun getPage(offset: Int, pageSize: Int): List<ArticleEntity>
 }

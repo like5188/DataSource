@@ -12,6 +12,7 @@ import com.like.common.util.datasource.collectWithProgress
 import com.like.datasource.sample.R
 import com.like.datasource.sample.data.db.Db
 import com.like.datasource.sample.databinding.ActivityPagingBinding
+import com.like.datasource.sample.paging.dataSource.inDb.DbArticlePagingDataSource
 import com.like.datasource.sample.paging.dataSource.inDb.DbBannerNotPagingDataSource
 import com.like.datasource.sample.paging.dataSource.inDb.DbTopArticleNotPagingDataSource
 import com.like.datasource.sample.paging.dataSource.inMemory.MemoryArticlePagingDataSource
@@ -21,7 +22,6 @@ import com.like.datasource.sample.paging.dataSource.inMemory.MemoryTopArticleNot
 import com.like.datasource.sample.paging.repository.PagingRepository
 import com.like.datasource.sample.paging.viewModel.PagingViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class PagingActivity : AppCompatActivity() {
@@ -32,11 +32,12 @@ class PagingActivity : AppCompatActivity() {
         ViewModelProvider(
             this, PagingViewModel.Factory(
                 PagingRepository(
+                    DbBannerNotPagingDataSource(this),
+                    DbTopArticleNotPagingDataSource(this),
+                    DbArticlePagingDataSource(this),
                     MemoryBannerNotPagingDataSource(),
                     MemoryTopArticleNotPagingDataSource(),
                     MemoryArticlePagingDataSource(),
-                    DbBannerNotPagingDataSource(this),
-                    DbTopArticleNotPagingDataSource(this),
                     MemoryDataSource()
                 )
             )
@@ -82,18 +83,18 @@ class PagingActivity : AppCompatActivity() {
 
     fun clearDb(view: View) {
         lifecycleScope.launch(Dispatchers.IO) {
-            Db.getInstance(application).topArticleEntityDao().deleteAll()
             Db.getInstance(application).bannerEntityDao().deleteAll()
+            Db.getInstance(application).topArticleEntityDao().deleteAll()
             Db.getInstance(application).articleEntityDao().deleteAll()
         }
     }
 
     fun queryDb(view: View) {
         lifecycleScope.launch(Dispatchers.IO) {
-            Db.getInstance(application).topArticleEntityDao().getAll().forEach {
+            Db.getInstance(application).bannerEntityDao().getAll().forEach {
                 Logger.i(it.toString())
             }
-            Db.getInstance(application).bannerEntityDao().getAll().forEach {
+            Db.getInstance(application).topArticleEntityDao().getAll().forEach {
                 Logger.i(it.toString())
             }
             Db.getInstance(application).articleEntityDao().getAll().forEach {
