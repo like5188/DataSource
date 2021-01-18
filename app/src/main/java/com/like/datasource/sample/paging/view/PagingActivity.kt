@@ -80,23 +80,6 @@ class PagingActivity : AppCompatActivity() {
         mViewModel.getResult().retry()
     }
 
-    fun getAllFlow(view: View) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            Db.getInstance(application).topArticleEntityDao().getAllFlow().collect {
-                Logger.e("getAllFlow $it")
-            }
-        }
-    }
-
-    fun changeDb(view: View) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            Db.getInstance(application).topArticleEntityDao().getAll().firstOrNull()?.let {
-                it.title = "change title"
-                Db.getInstance(application).topArticleEntityDao().update(it)
-            }
-        }
-    }
-
     fun clearDb(view: View) {
         lifecycleScope.launch(Dispatchers.IO) {
             Db.getInstance(application).topArticleEntityDao().deleteAll()

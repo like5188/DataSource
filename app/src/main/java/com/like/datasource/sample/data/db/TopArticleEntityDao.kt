@@ -17,7 +17,4 @@ interface TopArticleEntityDao : BaseDao<TopArticleEntity> {
 
     @Query("SELECT * FROM TopArticleEntity ORDER BY id ASC")
     fun getAll(): List<TopArticleEntity>
-
-    @Query("SELECT * FROM TopArticleEntity ORDER BY id ASC")
-    fun getAllFlow(): Flow<List<TopArticleEntity>>
 }
